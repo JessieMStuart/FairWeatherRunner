@@ -37,7 +37,7 @@ class App extends React.Component {
 
         return (
             <div>
-               <p>{this.state.weatherData.name ? `My location is: ${this.state.weatherData.name}` : "Oi I'm loading..."}</p>
+               <p>{this.state.weatherData ? `My location is: ${this.state.weatherData.name}` : "Oi I'm loading..."}</p>
             </div>
         );
     }
