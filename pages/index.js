@@ -19,11 +19,17 @@ class App extends React.Component {
 
    async componentDidMount() {
        try {
-        const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=leeds&appid=${process.env.API_KEY}`)
-        this.setState({weatherData: result.data})
-    } catch (e) {
+        const locationInfo = await axios.get(`http://www.geoplugin.net/json.gp`);
+        const city = locationInfo && locationInfo.data && locationInfo.data.geoplugin_city;
+            if (city) {
+                const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`)
+                this.setState({weatherData: result.data})  
+            } else {
+                throw new Error('Could not obtain city information')
+            }   
+        } catch (e) {
            this.setState({error: `An error was thrown :( oh no : ${e.message})`})
-       } finally {}
+        } finally {}
     }
 
     render() {
